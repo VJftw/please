@@ -50,12 +50,22 @@ sh_test(
     data = [":binary_entrypoint"],
 )
 
+nushell_version = "0.104.1"
+nushell_release_asset_suffix_by_os_arch = {
+    "linux_amd64": "-x86_64-unknown-linux-gnu.tar.gz",
+    "linux_arm64": "-aarch64-unknown-linux-gnu.tar.gz",
+    "darwin_amd64": "-x86_64-apple-darwin.tar.gz",
+    "darwin_arm64": "-aarch64-apple-darwin.tar.gz",
+}
+nushell_release_asset_suffix = nushell_release_asset_suffix_by_os_arch[CONFIG.OS+"_"+CONFIG.ARCH]
+nushell_release_asset_extracted_suffix = nushell_release_asset_suffix.split(".")[0]
+
 remote_file(
     name = "nu",
-    url = "https://github.com/nushell/nushell/releases/download/0.104.1/nu-0.104.1-x86_64-unknown-linux-gnu.tar.gz",
+    url = f"https://github.com/nushell/nushell/releases/download/{nushell_version}/nu-{nushell_version}-{nushell_release_asset_suffix}",
     extract = True,
     binary = True,
-    exported_files = ["nu-0.104.1-x86_64-unknown-linux-gnu/nu"],
+    exported_files = [f"nu-{nushell_version}-{nushell_release_asset_extracted_suffix}/nu"],
 )
 
 build_rule(
@@ -76,9 +86,18 @@ sh_test(
     data = [":nushell_entrypoint"],
 )
 
+powershell_version = "7.5.2"
+powershell_release_asset_suffix_by_os_arch = {
+    "linux_amd64": "-linux-x64.tar.gz",
+    "linux_arm64": "-linux-arm64.tar.gz",
+    "darwin_amd64": "-osx-x64.tar.gz",
+    "darwin_arm64": "-osx-arm64.tar.gz",
+}
+powershell_release_asset_suffix = powershell_release_asset_suffix_by_os_arch[CONFIG.OS+"_"+CONFIG.ARCH]
+
 remote_file(
     name = "powershell_toolchain",
-    url = "https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/powershell-7.5.2-linux-x64.tar.gz",
+    url = f"https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/powershell-7.5.2-{powershell_release_asset_suffix}",
     extract = True,
     out = "powershell_toolchain",
     entry_points = {

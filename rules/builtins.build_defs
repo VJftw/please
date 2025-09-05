@@ -1,6 +1,5 @@
 # Contains declarations of built-in functions & objects
 
-
 # Do not change the order of arguments to this function without updating the iota in targets.go to match it.
 def build_rule(
         name:str,
@@ -55,61 +54,80 @@ def build_rule(
         _file_content:str=None,
         _subrepo:bool=False,
         no_test_coverage:bool=False,
-        build_entrypoint:dict={
-            # This matches the default `BuildEntrypoint` in the
-            # `NewBuildEntrypoint` constructor in `src/core/build_entrypoint.go`.
-            "entrypoint": ["bash", "--noprofile", "--norc", "-u", "-o", "pipefail"],
-            "exit_on_error_flags": ["-e"],
-            "interactive_flags": [],
-            "exec_command_flags": ["-c"],
-        }):
+        # This matches the default `BuildEntrypoint` in the
+        # `NewBuildEntrypoint` constructor in `src/core/build_entrypoint.go`.
+        build_entry_point:list=["bash", "--noprofile", "--norc", "-u", "-o", "pipefail"],
+        build_entry_point_exit_on_error_args:list=["-e"],
+        build_entry_point_interactive_args:list=[],
+        build_entry_point_exec_command_args:list=[]):
     pass
 
 def chr(i:int) -> str:
     pass
+
 def ord(c:str) -> int:
     pass
+
 def len(obj:list|dict|str) -> int:
     pass
+
 def enumerate(seq:list):
     pass
+
 def zip(args):
     pass
 
 def join(self:str, seq:list) -> str:
     pass
-def split(self:str, on:str=' ') -> list:
+
+def split(self:str, on:str=" ") -> list:
     pass
+
 def replace(self:str, old:str, new:str):
     pass
+
 def partition(self:str, sep:str) -> list:
     pass
+
 def rpartition(self:str, sep:str) -> list:
     pass
+
 def startswith(self:str, s:str) -> bool:
     pass
+
 def endswith(self:str, s:str) -> bool:
     pass
+
 def format(self:str) -> str:
     pass
-def lstrip(self:str, cutset:str=' \n') -> str:
+
+def lstrip(self:str, cutset:str=" \n") -> str:
     pass
-def rstrip(self:str, cutset:str=' \n') -> str:
+
+def rstrip(self:str, cutset:str=" \n") -> str:
     pass
-def strip(self:str, cutset:str=' \n') -> str:
+
+def strip(self:str, cutset:str=" \n") -> str:
     pass
+
 def removeprefix(self:str, prefix:str) -> str:
     pass
+
 def removesuffix(self:str, suffix:str) -> str:
     pass
+
 def find(self:str, needle:str) -> int:
     pass
+
 def rfind(self:str, needle:str) -> int:
     pass
+
 def count(self:str, needle:str) -> int:
     pass
+
 def upper(self:str) -> str:
     pass
+
 def lower(self:str) -> str:
     pass
 
@@ -118,16 +136,23 @@ def fail(msg:str):
 
 def subinclude(target:str|list):
     pass
+
 def load(target:str, names:str=None):
     pass
-def subrepo(name:str, dep:str='', path:str=None, config:str=None, bazel_compat:bool=False, arch:str=None,
-    plugin:bool=False, package_root:str=None):
-    pass
 
+def subrepo(
+        name:str,
+        dep:str="",
+        path:str=None,
+        config:str=None,
+        bazel_compat:bool=False,
+        arch:str=None,
+        plugin:bool=False,
+        package_root:str=None):
+    pass
 
 def isinstance(obj, types:function|list) -> bool:
     pass
-
 
 def range(start:int, stop:int=None, step:int=1) -> str:
     pass
@@ -155,21 +180,24 @@ def reduce(reducer:function, seq:list, initializer=None):
 
 def bool(b) -> bool:
     pass
+
 def int(s:str) -> int:
     pass
+
 def str(s) -> str:
     pass
+
 def list(l):
-    fail('list is not callable')
+    fail("list is not callable")
+
 def dict(d):
-    fail('dict is not callable')
+    fail("dict is not callable")
+
 def callable(f:function) -> bool:
     return isinstance(f, callable)
 
-
 def glob(include:list|str, exclude:list|str&excludes=[], hidden:bool=CONFIG.BAZEL_COMPATIBILITY, include_symlinks:bool=False, allow_empty:bool=False) -> list:
     pass
-
 
 def package():
     pass
@@ -182,35 +210,46 @@ def reversed(seq:list) -> list:
 
 def get(self:dict, key:str, default=None):
     pass
+
 def setdefault(self:config, key:str, default=None) -> config:
     if key in self:
         return self[key]
     self[key] = default
     return default
+
 def keys(self:dict) -> list:
     pass
+
 def values(self:dict) -> list:
     pass
+
 def items(self:dict) -> list:
     pass
+
 def copy(self:dict) -> dict:
     pass
 
 def config_get(self:config, key:str, default=None) -> config:
     pass
+
 def config_keys(self:config) -> list:
     pass
+
 def config_items(self:config) -> list:
     pass
+
 def config_values(self:config) -> list:
     pass
 
 def get_base_path(label:str=None, subinclude_context:bool=None) -> str:
     pass
+
 def package_name(label:str=None, subinclude_context:bool=None) -> str:
     pass
+
 def subrepo_name(label:str=None, subinclude_context:bool=None) -> str:
     pass
+
 def looks_like_build_label(label:str) -> bool:
     pass
 
@@ -234,111 +273,124 @@ def tag(name:str, tag:str):
     pass
 
 def git_branch(short:bool=True) -> str:
-    fail('Disabled in config')
+    fail("Disabled in config")
+
 def git_commit() -> str:
-    fail('Disabled in config')
+    fail("Disabled in config")
+
 def git_show(fmt:str) -> str:
-    fail('Disabled in config')
+    fail("Disabled in config")
+
 def git_state(clean_label:str="clean", dirty_label:str="dirty") -> str:
-    fail('Disabled in config')
+    fail("Disabled in config")
 
 def debug(args):
     pass
+
 def info(args):
     pass
+
 def notice(args):
     pass
+
 def warning(args):
     pass
+
 def error(args):
     pass
+
 def fatal(args):
     pass
 
 log = {
-    'debug': debug,
-    'info': info,
-    'notice': notice,
-    'warning': warning,
-    'error': error,
-    'fatal': fatal,
+    "debug": debug,
+    "info": info,
+    "notice": notice,
+    "warning": warning,
+    "error": error,
+    "fatal": fatal,
 }
-
 
 def join_path(paths:str) -> str:
     pass  # Has to be implemented natively since it's varargs.
 
-
 def split_path(p:str) -> list:
-    before, _, after = p.rpartition('/')
+    before, _, after = p.rpartition("/")
     return before, after
 
-
 def splitext(p:str) -> list:
-    before, dot, after = p.rpartition('.')
-    return (before, dot + after) if before else (after, '')
-
+    before, dot, after = p.rpartition(".")
+    return (before, dot + after) if before else (after, "")
 
 def basename(p:str) -> str:
     """Returns the final component of a pathname"""
-    _, _, after = p.rpartition('/')
+    _, _, after = p.rpartition("/")
     return after
-
 
 def dirname(p:str) -> str:
     """Returns the directory component of a pathname"""
-    before, _, after = p.rpartition('/')
+    before, _, after = p.rpartition("/")
     return before
-
 
 # Post-build callback functions.
 def get_labels(name:str, prefix:str, all:bool=False, transitive=True) -> list:
     pass
+
 def has_label(name:str, prefix:str, all:bool=False) -> bool:
     return len(get_labels(name, prefix, all)) > 0
+
 def add_label(name:str, label:str):
     pass
+
 def add_dep(target:str, dep:str, exported:bool=False):
     pass
+
 def add_exported_dep(target:str, dep:str):
     add_dep(target, dep, True)
+
 def add_data(target:str, datum:str|list|dict):
     pass
-def add_out(target:str, name:str, out:str=''):
-    pass
-def get_outs(target:str):
-    pass
-def get_named_outs(target:str) -> dict:
-    pass
-def add_entry_point(target:str, name:str, out:str):
-    pass
-def get_entry_points(target:str) -> dict:
-    pass
-def add_licence(target:str, licence:str):
-    pass
-def get_licences(target:str):
-    pass
-def get_command(target:str, config:str=''):
-    pass
-def set_command(target:str, config:str, command:str=''):
+
+def add_out(target:str, name:str, out:str=""):
     pass
 
+def get_outs(target:str):
+    pass
+
+def get_named_outs(target:str) -> dict:
+    pass
+
+def add_entry_point(target:str, name:str, out:str):
+    pass
+
+def get_entry_points(target:str) -> dict:
+    pass
+
+def add_licence(target:str, licence:str):
+    pass
+
+def get_licences(target:str):
+    pass
+
+def get_command(target:str, config:str=""):
+    pass
+
+def set_command(target:str, config:str, command:str=""):
+    pass
 
 # N.B. This should really be limited so it's only visible when Bazel compat is on,
 #      but we currently don't alter the builtins for that scenario.
 def licenses(licences):
     """Sets the default licences for the package."""
-    assert CONFIG.BAZEL_COMPATIBILITY, 'licenses() can only be called in Bazel compat mode'
+    assert CONFIG.BAZEL_COMPATIBILITY, "licenses() can only be called in Bazel compat mode"
     package(default_licences = licences)
-
 
 def json(value, pretty=False) -> str:
     """Returns a JSON-formatted representation of a plz value.
-    
+
     If pretty is true, the JSON will be pretty-printed with 2 spaces of indentation per level.
     """
     pass
-
 
 def breakpoint():
     """Breaks into an interactive debugging session."""

@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/peterebden/go-deferred-regex"
+	deferredregex "github.com/peterebden/go-deferred-regex"
 
 	"github.com/thought-machine/please/src/cli"
 	"github.com/thought-machine/please/src/core"
@@ -443,11 +443,11 @@ func printTempDirs(state *core.BuildState, duration time.Duration, shell, shellR
 			fmt.Printf("   Expanded: %s\n", os.Expand(cmd, env.ReplaceEnvironment))
 		} else {
 			fmt.Printf("\n")
-			buildArgvOpts := []core.BuildArgvOpt{target.BuildEntrypoint.WithBuildArgvInteractive()}
+			buildArgvOpts := []core.BuildArgvOpt{target.BuildEntryPoint.WithBuildArgvInteractive()}
 			if shellRun {
-				buildArgvOpts = append(buildArgvOpts, target.BuildEntrypoint.WithBuildArgvCommand(cmd))
+				buildArgvOpts = append(buildArgvOpts, target.BuildEntryPoint.WithBuildArgvCommand(cmd))
 			}
-			argv, err := target.BuildEntrypoint.BuildArgv(state, target, buildArgvOpts...)
+			argv, err := target.BuildEntryPoint.BuildArgv(state, target, buildArgvOpts...)
 			if err != nil {
 				log.Errorf("Could not build shell args: %s", err)
 			}

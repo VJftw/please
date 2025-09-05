@@ -520,11 +520,11 @@ func runBuildCommand(state *core.BuildState, target *core.BuildTarget, command s
 	env := core.StampedBuildEnvironment(state, target, inputHash, filepath.Join(core.RepoRoot, target.TmpDir()), target.Stamp).ToSlice()
 	log.Debug("Building target %s\nENVIRONMENT:\n%s\n%s", target.Label, env, command)
 
-	buildArgvOpts := []core.BuildArgvOpt{target.BuildEntrypoint.WithBuildArgvCommand(command)}
+	buildArgvOpts := []core.BuildArgvOpt{target.BuildEntryPoint.WithBuildArgvCommand(command)}
 	if target.ShouldExitOnError() {
-		buildArgvOpts = append(buildArgvOpts, target.BuildEntrypoint.WithBuildArgvExitOnError())
+		buildArgvOpts = append(buildArgvOpts, target.BuildEntryPoint.WithBuildArgvExitOnError())
 	}
-	argv, err := target.BuildEntrypoint.BuildArgv(state, target, buildArgvOpts...)
+	argv, err := target.BuildEntryPoint.BuildArgv(state, target, buildArgvOpts...)
 	if err != nil {
 		return nil, err
 	}

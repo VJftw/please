@@ -72,7 +72,10 @@ const (
 	fileContentArgIdx
 	subrepoArgIdx
 	noTestCoverageArgIdx
-	buildEntrypointArgIdx
+	buildEntryPointArgIdx
+	buildEntryPointExitOnErrorArgsArgIdx
+	buildEntryPointInteractiveArgsArgIdx
+	buildEntryPointExecCommandArgsArgIdx
 )
 
 // createTarget creates a new build target as part of build_rule().
@@ -141,7 +144,12 @@ func createTarget(s *scope, args []pyObject) *core.BuildTarget {
 		target.AddLabel("remote")
 	}
 	target.Command, target.Commands = decodeCommands(s, args[cmdBuildRuleArgIdx])
-	target.BuildEntrypoint = decodeBuildEntrypoint(s, args[buildEntrypointArgIdx])
+	target.BuildEntryPoint = core.NewBuildEntrypoint(
+		core.WithBuildEntrypointEntrypoint(asStringList(s, mustList(args[buildEntryPointArgIdx]), "build_entry_point")),
+		core.WithBuildEntrypointExitOnErrorArgs(asStringList(s, mustList(args[buildEntryPointExitOnErrorArgsArgIdx]), "build_entry_point_exit_on_error_args")),
+		core.WithBuildEntrypointInteractiveArgs(asStringList(s, mustList(args[buildEntryPointInteractiveArgsArgIdx]), "build_entry_point_interactive_args")),
+		core.WithBuildEntrypointExecCommandArgs(asStringList(s, mustList(args[buildEntryPointExecCommandArgsArgIdx]), "build_entry_point_exec_command_args")),
+	)
 
 	if test {
 		target.Test = new(core.TestFields)
